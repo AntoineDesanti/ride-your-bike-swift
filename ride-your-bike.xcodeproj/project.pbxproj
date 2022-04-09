@@ -19,7 +19,6 @@
 		88D891292801B788003382F1 /* StationsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D891282801B788003382F1 /* StationsAPI.swift */; };
 		88D8912B2801D1D2003382F1 /* Station.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D8912A2801D1D2003382F1 /* Station.swift */; };
 		88D8912D2801F5B7003382F1 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D8912C2801F5B7003382F1 /* City.swift */; };
-		88D8913128022413003382F1 /* keys.plist in Resources */ = {isa = PBXBuildFile; fileRef = 88D8913028022413003382F1 /* keys.plist */; };
 		88D891332802247B003382F1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D891322802247B003382F1 /* Constants.swift */; };
 /* End PBXBuildFile section */
 
@@ -38,7 +37,6 @@
 		88D891282801B788003382F1 /* StationsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StationsAPI.swift; sourceTree = "<group>"; };
 		88D8912A2801D1D2003382F1 /* Station.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Station.swift; sourceTree = "<group>"; };
 		88D8912C2801F5B7003382F1 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
-		88D8913028022413003382F1 /* keys.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = keys.plist; sourceTree = "<group>"; };
 		88D891322802247B003382F1 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -110,7 +108,6 @@
 				88D8911E28018D2B003382F1 /* TotalStands.swift */,
 				88D891282801B788003382F1 /* StationsAPI.swift */,
 				88D8912C2801F5B7003382F1 /* City.swift */,
-				88D8913028022413003382F1 /* keys.plist */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -175,7 +172,6 @@
 			files = (
 				88D891122800E9E0003382F1 /* Main.storyboard in Resources */,
 				88D8910F2800E9E0003382F1 /* Assets.xcassets in Resources */,
-				88D8913128022413003382F1 /* keys.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
