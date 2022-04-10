@@ -33,15 +33,12 @@ extension UIImage {
 class ViewController: UIViewController, MKMapViewDelegate {
 
     @IBOutlet weak var selectCityButton: UIButton!
+    @IBOutlet weak var initSeachScreenButton: UIButton!
+    
     
     let map = MKMapView()
-    let nantesCoordinate = CLLocationCoordinate2D(
-        latitude: 47.2151496951626, longitude: -1.55022624256337
-    )
-    let marseilleCoordinate = CLLocationCoordinate2D(
-        latitude: 43.290716834278136, longitude: 5.359258014511654
-    )
     var stations: [Station] = []
+    var toggleBlurBackground = false
    
     
     override func viewDidLoad() {
@@ -49,6 +46,12 @@ class ViewController: UIViewController, MKMapViewDelegate {
         
         view.addSubview(map)
         view.addSubview(selectCityButton)
+        view.addSubview(initSeachScreenButton)
+        
+        initSeachScreenButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
+
+
+
         map.frame = view.bounds
         map.delegate = self
         map.bringSubviewToFront(selectCityButton)
@@ -84,6 +87,10 @@ class ViewController: UIViewController, MKMapViewDelegate {
         keyboardHandler()
     }
     
+    @objc fileprivate func buttonTapped(){
+        toggleBlur()
+    }
+    
     func initSelectCityButton(){
         let optionClosure = { [self](action: UIAction) in
             let city = cities.filter { $0.name == action.title }[0]
@@ -101,12 +108,9 @@ class ViewController: UIViewController, MKMapViewDelegate {
             UIAction(title: "Marseille", state: .on, handler: optionClosure),
             UIAction(title: "Toulouse", state: .on, handler: optionClosure)
         ])
-//        for station in stations {
-//            selectCityButton.
-//        }
-            
+
 }
-    
+
     func updateStations(fetchedStations: [Station]){
         stations = fetchedStations
     }
@@ -148,19 +152,41 @@ class ViewController: UIViewController, MKMapViewDelegate {
             annotationView?.annotation = annotation
         }
         
-        let initialImage = UIImage(named: "bicycle")
+        let imageConfiguration = UIImage.SymbolConfiguration(scale: .medium)
+        let imageConfiguration2 = UIImage.SymbolConfiguration(paletteColors: [.white, .black])
+        imageConfiguration.applying(imageConfiguration2)
+
+        let initialImage = UIImage(systemName: "bicycle.circle.fill")
         
-        annotationView?.image = initialImage?.scaleImage(toSize: CGSize(width: 20, height: 20))
+        annotationView?.image = initialImage?.scaleImage(toSize: CGSize(width: 17, height: 17))
         return annotationView
     }
     
-    struct Position: Codable{
-        let latitute: Float
-        let longitude: Float
+    func toggleBlur(){
+        print(toggleBlurBackground)
+        if toggleBlurBackground{
+            view.viewWithTag(100)?.removeFromSuperview()
+        } else{
+            let blurEffect = UIBlurEffect(style: .regular)
+            let visualEffectView = UIVisualEffectView(effect: blurEffect)
+            visualEffectView.tag = 100
+            visualEffectView.frame = view.bounds
+            view.addSubview(visualEffectView)
+            
+            let vc = storyboard?.instantiateViewController(withIdentifier: "search_view") as! SearchViewController
+            vc.delegate = self
+            vc.modalPresentationStyle = .overCurrentContext
+            present(vc, animated: false)
+
+        }
+       
+        toggleBlurBackground = !toggleBlurBackground
+        
     }
     
+    func closeSearchView(){
+        toggleBlur()
+    }
     
-
-
 }
 
