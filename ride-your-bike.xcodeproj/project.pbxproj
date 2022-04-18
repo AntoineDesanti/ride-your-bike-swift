@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8881DFBD2808959C005DB130 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8881DFBC2808959C005DB130 /* MapViewController.swift */; };
 		88D891062800E9DE003382F1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D891052800E9DE003382F1 /* AppDelegate.swift */; };
 		88D891082800E9DE003382F1 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D891072800E9DE003382F1 /* SceneDelegate.swift */; };
 		88D8910A2800E9DE003382F1 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 88D891092800E9DE003382F1 /* ViewController.swift */; };
@@ -24,6 +25,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8881DFBC2808959C005DB130 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		88D891022800E9DE003382F1 /* ride-your-bike.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ride-your-bike.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		88D891052800E9DE003382F1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		88D891072800E9DE003382F1 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -88,6 +90,9 @@
 		88D89119280170BE003382F1 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				88D891092800E9DE003382F1 /* ViewController.swift */,
+				88D8913628023A5C003382F1 /* SearchViewController.swift */,
+				8881DFBC2808959C005DB130 /* MapViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -95,8 +100,6 @@
 		88D8911A280170C8003382F1 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				88D891092800E9DE003382F1 /* ViewController.swift */,
-				88D8913628023A5C003382F1 /* SearchViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -191,6 +194,7 @@
 				88D8912B2801D1D2003382F1 /* Station.swift in Sources */,
 				88D8912728018D2B003382F1 /* Availabilities.swift in Sources */,
 				88D8912528018D2B003382F1 /* Position.swift in Sources */,
+				8881DFBD2808959C005DB130 /* MapViewController.swift in Sources */,
 				88D8913728023A5C003382F1 /* SearchViewController.swift in Sources */,
 				88D891062800E9DE003382F1 /* AppDelegate.swift in Sources */,
 				88D8912D2801F5B7003382F1 /* City.swift in Sources */,

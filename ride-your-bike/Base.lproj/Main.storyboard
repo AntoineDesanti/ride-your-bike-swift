@@ -50,7 +50,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="52.173913043478265" y="375"/>
         </scene>
         <!--Search View Controller-->
         <scene sceneID="w9m-ci-dDc">
@@ -65,21 +65,51 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Exit"/>
                             </button>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Mucem, Marseille" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EYn-cO-Exq">
+                                <rect key="frame" x="40" y="231" width="334" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Parc Borely, Marseille" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mK1-p3-zuw">
+                                <rect key="frame" x="40" y="287" width="334" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xVh-2G-USF">
+                                <rect key="frame" x="120" y="365" width="174" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Search"/>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="SvL-Jx-t78"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="EYn-cO-Exq" firstAttribute="centerX" secondItem="Pxu-tN-QEh" secondAttribute="centerX" id="4TG-qg-GEG"/>
+                            <constraint firstItem="xVh-2G-USF" firstAttribute="leading" secondItem="SvL-Jx-t78" secondAttribute="leading" constant="120" id="5aw-Ih-lqG"/>
                             <constraint firstItem="FMc-Sz-cbB" firstAttribute="top" secondItem="SvL-Jx-t78" secondAttribute="top" id="8jZ-dQ-Ipd"/>
+                            <constraint firstItem="SvL-Jx-t78" firstAttribute="trailing" secondItem="EYn-cO-Exq" secondAttribute="trailing" constant="40" id="Fyr-L8-YZR"/>
+                            <constraint firstItem="SvL-Jx-t78" firstAttribute="trailing" secondItem="xVh-2G-USF" secondAttribute="trailing" constant="120" id="LZW-8l-Vsc"/>
+                            <constraint firstItem="EYn-cO-Exq" firstAttribute="leading" secondItem="SvL-Jx-t78" secondAttribute="leading" constant="40" id="MNJ-u6-HvS"/>
+                            <constraint firstItem="mK1-p3-zuw" firstAttribute="centerX" secondItem="Pxu-tN-QEh" secondAttribute="centerX" id="Txg-zl-22A"/>
+                            <constraint firstItem="mK1-p3-zuw" firstAttribute="top" secondItem="EYn-cO-Exq" secondAttribute="bottom" constant="22" id="X99-dJ-9BM"/>
+                            <constraint firstItem="EYn-cO-Exq" firstAttribute="top" secondItem="FMc-Sz-cbB" secondAttribute="bottom" constant="156" id="ZEI-ZU-UUu"/>
+                            <constraint firstItem="SvL-Jx-t78" firstAttribute="trailing" secondItem="mK1-p3-zuw" secondAttribute="trailing" constant="40" id="bG6-8x-bf7"/>
                             <constraint firstItem="SvL-Jx-t78" firstAttribute="trailing" secondItem="FMc-Sz-cbB" secondAttribute="trailing" constant="20" id="buc-MG-zTy"/>
+                            <constraint firstItem="xVh-2G-USF" firstAttribute="top" secondItem="mK1-p3-zuw" secondAttribute="bottom" constant="44" id="dse-Xf-LhR"/>
+                            <constraint firstItem="xVh-2G-USF" firstAttribute="centerX" secondItem="Pxu-tN-QEh" secondAttribute="centerX" id="o67-Cn-hb1"/>
+                            <constraint firstItem="mK1-p3-zuw" firstAttribute="leading" secondItem="SvL-Jx-t78" secondAttribute="leading" constant="40" id="wCm-Zm-stq"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="endPointField" destination="mK1-p3-zuw" id="TRB-6S-u8h"/>
                         <outlet property="exitButton" destination="FMc-Sz-cbB" id="Zsj-A3-bKy"/>
+                        <outlet property="startPointField" destination="EYn-cO-Exq" id="dzY-lC-ODR"/>
+                        <outlet property="startSearchButton" destination="xVh-2G-USF" id="XLp-b3-Crz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ooa-z7-FME" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="794" y="375"/>
+            <point key="canvasLocation" x="792.75362318840587" y="375"/>
         </scene>
     </scenes>
     <resources>

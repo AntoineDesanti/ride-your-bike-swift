@@ -10,27 +10,8 @@ import MapKit
 import CoreLocation
 
 
-extension UIImage {
-    func scaleImage(toSize newSize: CGSize) -> UIImage? {
-        var newImage: UIImage?
-        let newRect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height).integral
-        UIGraphicsBeginImageContextWithOptions(newSize, false, 0)
-        if let context = UIGraphicsGetCurrentContext(), let cgImage = self.cgImage {
-            context.interpolationQuality = .high
-            let flipVertical = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: newSize.height)
-            context.concatenate(flipVertical)
-            context.draw(cgImage, in: newRect)
-            if let img = context.makeImage() {
-                newImage = UIImage(cgImage: img)
-            }
-            UIGraphicsEndImageContext()
-        }
-        return newImage
-    }
-}
 
-
-class ViewController: UIViewController, MKMapViewDelegate {
+class ViewController: UIViewController {
 
     @IBOutlet weak var selectCityButton: UIButton!
     @IBOutlet weak var initSeachScreenButton: UIButton!
@@ -49,8 +30,6 @@ class ViewController: UIViewController, MKMapViewDelegate {
         view.addSubview(initSeachScreenButton)
         
         initSeachScreenButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
-
-
 
         map.frame = view.bounds
         map.delegate = self
@@ -74,15 +53,12 @@ class ViewController: UIViewController, MKMapViewDelegate {
 
                     map.setRegion(MKCoordinateRegion(
                         center: CLLocationCoordinate2D(
-                            latitude: (currentStation.position?.latitude)!,
-                            longitude: (currentStation.position?.longitude)!
+                            latitude: (cities[0].latitude),
+                            longitude: (cities[0].longitude)
                         ), span: MKCoordinateSpan(latitudeDelta: 0.008, longitudeDelta: 0.008)), animated: false)
                 }
             }
         }
-        
-        print(stations)
-     
         
         keyboardHandler()
     }
@@ -104,8 +80,8 @@ class ViewController: UIViewController, MKMapViewDelegate {
             print(action.title)}
         
         selectCityButton.menu = UIMenu(children: [
-            UIAction(title: "Nantes", state: .on, handler: optionClosure),
             UIAction(title: "Marseille", state: .on, handler: optionClosure),
+            UIAction(title: "Nantes", state: .on, handler: optionClosure),
             UIAction(title: "Toulouse", state: .on, handler: optionClosure)
         ])
 
@@ -134,36 +110,11 @@ class ViewController: UIViewController, MKMapViewDelegate {
         pin.coordinate = location
         pin.title = "Station : " + station.name!
         pin.subtitle = "Available bikes : " + String(station.available_bikes!)
+      
         map.addAnnotation(pin)
     }
     
-    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard !(annotation is MKUserLocation) else {
-            return nil
-        }
-        
-        var annotationView = map.dequeueReusableAnnotationView(withIdentifier: "custom")
-        
-        if annotationView == nil{
-            annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: "custom")
-            annotationView?.canShowCallout = true
-        }
-        else{
-            annotationView?.annotation = annotation
-        }
-        
-        let imageConfiguration = UIImage.SymbolConfiguration(scale: .medium)
-        let imageConfiguration2 = UIImage.SymbolConfiguration(paletteColors: [.white, .black])
-        imageConfiguration.applying(imageConfiguration2)
-
-        let initialImage = UIImage(systemName: "bicycle.circle.fill")
-        
-        annotationView?.image = initialImage?.scaleImage(toSize: CGSize(width: 17, height: 17))
-        return annotationView
-    }
-    
     func toggleBlur(){
-        print(toggleBlurBackground)
         if toggleBlurBackground{
             view.viewWithTag(100)?.removeFromSuperview()
         } else{
@@ -181,12 +132,117 @@ class ViewController: UIViewController, MKMapViewDelegate {
         }
        
         toggleBlurBackground = !toggleBlurBackground
-        
     }
     
     func closeSearchView(){
         toggleBlur()
     }
     
+
+    func computeRoute(startPoint: CLLocationCoordinate2D, endPoint: CLLocationCoordinate2D){
+        
+        print(startPoint)
+        print(endPoint)
+        
+        if(startPoint.latitude != 0 && endPoint.latitude != 0){
+            map.setCenter(
+                CLLocationCoordinate2D(
+                    latitude: (startPoint.latitude+endPoint.latitude)/2,
+                    longitude: (startPoint.longitude+endPoint.longitude)/2), animated: true)
+            
+            map.region.span =  MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+        }
+        
+        let startPin = MKPointAnnotation()
+        startPin.coordinate = startPoint
+        startPin.title = "A"
+        
+        let endPin = MKPointAnnotation()
+        endPin.coordinate = endPoint
+        endPin.title = "B"
+        
+        map.addAnnotation(startPin)
+        map.addAnnotation(endPin)
+        
+        let routeRequest = MKDirections.Request()
+        routeRequest.source =  MKMapItem(placemark: MKPlacemark(coordinate: startPoint))
+        routeRequest.destination =  MKMapItem(placemark: MKPlacemark(coordinate: endPoint))
+        routeRequest.transportType = .walking
+        
+        let directions = MKDirections(request: routeRequest)
+        directions.calculate{ response, error in
+            guard let route = response?.routes.first else {return}
+            print("ROUTE: ",route.polyline)
+            self.map.addOverlay(route.polyline)
+            self.map.setVisibleMapRect(
+                route.polyline.boundingMapRect,
+                animated: true)
+            print("Overlay added !")
+        }
+        
+    }
+    
+    func subSearchMethod(startPointString: String, endPointString: String){
+        
+        var searchArea = MKCoordinateRegion()
+        searchArea.center = map.centerCoordinate
+        
+        let searchRequest = MKLocalSearch.Request()
+        let searchRequest2 = MKLocalSearch.Request()
+        searchRequest.region = searchArea
+        searchRequest2.region = searchArea
+        searchRequest.naturalLanguageQuery = startPointString
+        searchRequest2.naturalLanguageQuery = endPointString
+
+        let search = MKLocalSearch(request: searchRequest)
+        let search2 = MKLocalSearch(request: searchRequest2)
+
+        var startPoint = CLLocationCoordinate2D();
+        var endPoint = CLLocationCoordinate2D();
+        
+        search.start { response1, error in
+            guard let response1 = response1 else {
+                print("Error: \(error?.localizedDescription ?? "Unknown error").")
+                return
+            }
+            startPoint = response1.mapItems[0].placemark.coordinate
+            
+            search2.start { response2, error in
+               guard let response2 = response2 else {
+                   print("Error: \(error?.localizedDescription ?? "Unknown error").")
+                   return
+               }
+               endPoint = response2.mapItems[0].placemark.coordinate
+               self.computeRoute(startPoint: startPoint, endPoint: endPoint)
+           }
+        }
+    }
+    
+
+    
 }
+
+
+    
+
+extension UIImage {
+    func scaleImage(toSize newSize: CGSize) -> UIImage? {
+        var newImage: UIImage?
+        let newRect = CGRect(x: 0, y: 0, width: newSize.width, height: newSize.height).integral
+        UIGraphicsBeginImageContextWithOptions(newSize, false, 0)
+        if let context = UIGraphicsGetCurrentContext(), let cgImage = self.cgImage {
+            context.interpolationQuality = .high
+            let flipVertical = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: newSize.height)
+            context.concatenate(flipVertical)
+            context.draw(cgImage, in: newRect)
+            if let img = context.makeImage() {
+                newImage = UIImage(cgImage: img)
+            }
+            UIGraphicsEndImageContext()
+        }
+        return newImage
+    }
+}
+
+
 
