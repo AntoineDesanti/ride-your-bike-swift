@@ -15,19 +15,28 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var selectCityButton: UIButton!
     @IBOutlet weak var initSeachScreenButton: UIButton!
+    @IBOutlet weak var stationsToggleButton: UIButton!
     
     
     let map = MKMapView()
+    var startPin: MKPointAnnotation = MKPointAnnotation()
+    var endPin: MKPointAnnotation = MKPointAnnotation()
     var stations: [Station] = []
     var toggleBlurBackground = false
    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+     
         view.addSubview(map)
         view.addSubview(selectCityButton)
         view.addSubview(initSeachScreenButton)
+      //  view.addSubview(stationsToggleButton)
+        
+        stationsToggleButton.layer.cornerRadius = stationsToggleButton.frame.width / 2
+        stationsToggleButton.layer.masksToBounds = true
+        
+    
         
         initSeachScreenButton.addTarget(self, action: #selector(buttonTapped), for: .touchUpInside)
 
@@ -141,9 +150,6 @@ class ViewController: UIViewController {
 
     func computeRoute(startPoint: CLLocationCoordinate2D, endPoint: CLLocationCoordinate2D){
         
-        print(startPoint)
-        print(endPoint)
-        
         if(startPoint.latitude != 0 && endPoint.latitude != 0){
             map.setCenter(
                 CLLocationCoordinate2D(
@@ -153,13 +159,17 @@ class ViewController: UIViewController {
             map.region.span =  MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
         }
         
-        let startPin = MKPointAnnotation()
+        self.map.removeAnnotation(startPin)
+        self.map.removeAnnotation(endPin)
+
+        startPin = MKPointAnnotation()
         startPin.coordinate = startPoint
         startPin.title = "A"
         
-        let endPin = MKPointAnnotation()
+        endPin = MKPointAnnotation()
         endPin.coordinate = endPoint
         endPin.title = "B"
+        
         
         map.addAnnotation(startPin)
         map.addAnnotation(endPin)
@@ -173,6 +183,8 @@ class ViewController: UIViewController {
         directions.calculate{ response, error in
             guard let route = response?.routes.first else {return}
             print("ROUTE: ",route.polyline)
+            self.map.removeOverlays(self.map.overlays)
+           
             self.map.addOverlay(route.polyline)
             self.map.setVisibleMapRect(
                 route.polyline.boundingMapRect,

@@ -33,6 +33,11 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Search"/>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gZy-r9-b6q">
+                                <rect key="frame" x="297" y="831" width="77" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Stations"/>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -41,11 +46,14 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="eFf-gl-rOm" secondAttribute="bottom" id="XJI-ZH-dco"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="B9Z-C3-gZL" secondAttribute="trailing" constant="20" id="a69-5z-WIJ"/>
                             <constraint firstItem="eFf-gl-rOm" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="d3K-FY-w45"/>
+                            <constraint firstItem="gZy-r9-b6q" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="dg9-v8-qyM"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="gZy-r9-b6q" secondAttribute="trailing" constant="40" id="yAP-3d-jsJ"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="initSeachScreenButton" destination="B9Z-C3-gZL" id="nAL-dY-sYf"/>
                         <outlet property="selectCityButton" destination="eFf-gl-rOm" id="6KN-E0-5UY"/>
+                        <outlet property="stationsToggleButton" destination="gZy-r9-b6q" id="FAl-aH-u6e"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
