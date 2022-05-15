@@ -20,3 +20,4 @@ Ride Your Bike! let you choose between 3 French cities (which can be easily exte
 
 ## Requirements
 - Developped for iOS 15.4 (Xcode 13.3.1)
+- Create a JCDecaux Developer free API Key [here](https://developer.jcdecaux.com/#/login) then put in a Constant.swift file at the root of the Swift project like this : ```let JCDecaux_API_Key = "YOUR_API_KEY"```
